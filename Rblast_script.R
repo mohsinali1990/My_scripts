@@ -1,4 +1,4 @@
-# Author: Dr.Mohsin Ali; Email: mohsinali@caas.cn 
+# Author: Dr.Mohsin Ali
 
 #install rBLAST using devtools
 
