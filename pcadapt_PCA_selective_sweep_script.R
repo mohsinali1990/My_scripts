@@ -46,8 +46,6 @@ barplot(PCA_Var_out)
 
 # data visualization 
 plot(myVCF_PCA_only, option = "screeplot")
-plot(myVCF_PCA_only, option = "manhattan", pop = Popinfo$myorder)
-
 plot(myVCF_PCA_only , option = "manhattan")
 plot(myVCF_PCA_only , option = "qqplot")
 plot(myVCF_PCA_only , option = "stat.distribution")
