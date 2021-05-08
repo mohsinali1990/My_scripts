@@ -4,7 +4,7 @@
 
 
 library(pcadapt)
-
+library(qvalue)
 
 # pcadapt has been developed to detect genetic markers involved in biological adaptation. pcadapt provides statistical tools for outlier detection based on Principal Component Analysis (PCA).
 
@@ -83,6 +83,22 @@ pairs(
     )
 )
 
+
 plot(pcaplot, option = "screeplot")
 plot(pcaplot, option = "scores")
 plot(pcaplot , option = "manhattan")
+
+
+qval <- qvalue(myVCF_PCA_only$pvalues)$qvalues
+alpha <- 0.1
+outliers_pcadapt <- which(qval < alpha)
+print(outliers_pcadapt)
+
+length(outliers_pcadapt) # 1428 outliers
+
+
+alpha <- 0.05 # use of a more stringent threshold to detect outliers
+outliers <- which(qval < alpha)
+print(outliers)
+length(outliers_pcadapt) # 1428 outliers
+
