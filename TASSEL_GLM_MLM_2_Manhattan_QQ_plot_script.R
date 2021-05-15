@@ -3,7 +3,7 @@ library(dplyr)
 
 # import TASSEL results
 # note 
-TASSEL_MLM_Out <- read.table("Tassel_glm_out.txt", header = T, sep = "\t")
+TASSEL_MLM_Out <- read.table("TASSEL_MLM_out_mdp_genotype_+_mdp_traits_+_PC_mdp_genotype_stats.txt", header = T, sep = "\t")
 
 # Number of traits
 head(unique(TASSEL_MLM_Out$Trait))
@@ -53,3 +53,4 @@ par(mfrow=c(1,2))
 )
 
 (QQ_plot <- qq(TASSEL_MLM_Out$p,  main = "EarHT" ))
+
