@@ -10,25 +10,25 @@ library(rMVP)
 # Step1: formatting of data 
 ################################################################################
 
-MVP.Data(fileHMP="mdp_genotype.hmp.txt", #Genotype in hapmap format
+rm(list = ls()) #clear R environment
+
+MVP.Data(fileHMP="mdp_genotype.hmp.txt", #Genotypic data in HapMap format
          filePhe="mdp_traits.txt",
          sep.hmp="\t",
          sep.phe="\t",
          SNP.effect="Add",
          fileKin=T,
-         filePC=FALSE,
          out="mvp.hmp"
 )
 
 ################################################################################
-# Step2: import formated data (MVP.Data) from working directory 
+# Step2: import formatted data (MVP.Data) from working directory 
 ################################################################################
 
 genotypic_dat <- attach.big.matrix("mvp.hmp.geno.desc")
 phenotype_dat <- read.table("mvp.hmp.phe",head=TRUE)
 map_info <- read.table("mvp.hmp.geno.map" , head = TRUE)
-Kin_mat <- attach.big.matrix("mvp.hmp.kin.bin")
-popstr <- read.table("../mdp_population_structure.txt", header = T)
+popstr <- read.table("mdp_population_structure.txt", header = T, skip = 1)
 Kinship <- MVP.K.VanRaden(genotypic_dat, verbose = T)
 
 ################################################################################
