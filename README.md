@@ -1,3 +1,3 @@
 # My_scripts
 
-Save cmd scripts and shared R code here.
+Save CMD scripts and shared R code here.
