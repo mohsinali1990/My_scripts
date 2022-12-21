@@ -84,9 +84,9 @@ pairs(
 )
 
 
-plot(pcaplot, option = "screeplot")
-plot(pcaplot, option = "scores")
-plot(pcaplot , option = "manhattan")
+plot(myVCF_PCA_only, option = "screeplot")
+plot(myVCF_PCA_only, option = "scores")
+plot(myVCF_PCA_only , option = "manhattan")
 
 
 qval <- qvalue(myVCF_PCA_only$pvalues)$qvalues
