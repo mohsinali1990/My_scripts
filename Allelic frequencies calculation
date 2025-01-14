@@ -1,0 +1,74 @@
+set.seed(123)
+
+# Step 1: Simulate fake SNP data matrix
+num_individuals <- 100  # Number of individuals
+num_snps <- 50          # Number of SNP markers
+
+# Generate SNP data
+snp_data <- data.frame(
+  individuals = paste0("genotype", 1:num_individuals),
+  matrix(
+    sample(c("AA", "AG", "GG"), 
+           size = num_individuals * num_snps, 
+           replace = TRUE, 
+           prob = c(0.4, 0.4, 0.2)),
+    nrow = num_individuals, 
+    byrow = TRUE
+  )
+)
+
+# Rename SNP columns
+colnames(snp_data)[-1] <- paste0("SNP", 1:num_snps)
+
+# Step 2: Calculate genotypic and allelic frequencies
+allelic_freq_df <- data.frame(SNP = character(), Allele = character(), Freq = numeric())  # Initialize empty dataframe
+
+for (snp in colnames(snp_data)[-1]) {  # Loop through each SNP
+  print(snp)
+  
+  # Count genotypes
+  genotype_count <- table(snp_data[[snp]])
+  total_alleles <- 2 * nrow(snp_data)  # Total alleles = 2 * number of individuals
+  
+  # Count alleles
+  allele_count <- c(
+    A = 2 * genotype_count["AA"] + genotype_count["AG"],  # Count 'A' alleles
+    G = 2 * genotype_count["GG"] + genotype_count["AG"]   # Count 'G' alleles
+  )
+  
+  # Calculate allele frequencies
+  allele_freq <- allele_count / total_alleles
+  
+  # Store results in the dataframe
+  allelic_freq_df <- rbind(
+    allelic_freq_df,
+    data.frame(
+      SNP = snp,
+      Allele = names(allele_freq),
+      Allele_freq = as.numeric(allele_freq)
+    )
+  )
+  
+  # Print frequencies for the current SNP
+  cat("\n", snp, ":\n")
+  print(as.data.frame(allele_freq))
+}
+
+# Save allelic frequencies to CSV
+write.csv(allelic_freq_df, "allelic_frequencies.csv", row.names = FALSE)
+
+# Step 3: Add phenotypic data
+snp_data$phenotype <- sample(
+  c("Resistance", "Susceptible"), 
+  size = num_individuals, 
+  replace = TRUE, 
+  prob = c(0.6, 0.4)
+)
+
+# Step 4: Calculate phenotype frequencies
+pheno_count <- table(snp_data$phenotype)  # Count each phenotype
+pheno_freq <- pheno_count / num_individuals  # Calculate phenotype frequencies
+
+# Print phenotype frequencies
+cat("\nPhenotype Frequencies:\n")
+print(as.data.frame(pheno_freq))
